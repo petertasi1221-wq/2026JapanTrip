@@ -2,7 +2,7 @@ import React, { useState, useMemo } from 'react';
 import { USERS } from '../constants';
 import { Expense } from '../types';
 import { calculateSettlements } from '../services/money';
-import { Plus, X, Wallet, ArrowRight, Check } from 'lucide-react';
+import { Plus, X, Wallet, Trash2, Check, ReceiptText } from 'lucide-react';
 
 const ExpenseSplitter: React.FC = () => {
   const [expenses, setExpenses] = useState<Expense[]>([
@@ -40,6 +40,12 @@ const ExpenseSplitter: React.FC = () => {
     });
   };
 
+  const handleDeleteExpense = (id: string) => {
+    if (window.confirm('確定要刪除這筆支出嗎？')) {
+      setExpenses(prev => prev.filter(e => e.id !== id));
+    }
+  };
+
   const toggleUserInvolvement = (userId: string) => {
     const current = newExpense.involvedUserIds || [];
     if (current.includes(userId)) {
@@ -57,22 +63,26 @@ const ExpenseSplitter: React.FC = () => {
       <div className="fixed inset-0 bg-kyoto-cream z-50 flex flex-col animate-fade-in-up">
         <div className="p-6 flex justify-between items-center bg-white shadow-sm">
           <h2 className="text-xl font-bold text-kyoto-dark-brown">新增支出</h2>
-          <button onClick={() => setIsAdding(false)} className="bg-kyoto-sand p-2 rounded-full text-kyoto-brown">
+          <button onClick={() => setIsAdding(false)} className="bg-kyoto-sand p-2 rounded-full text-kyoto-brown active:scale-90 transition-transform">
             <X size={20} />
           </button>
         </div>
         
-        <div className="flex-1 p-6 space-y-6 overflow-y-auto">
+        <div className="flex-1 p-6 space-y-6 overflow-y-auto no-scrollbar">
           {/* Amount Input */}
           <div>
             <label className="block text-sm font-bold text-kyoto-brown/60 mb-2">金額 (日圓)</label>
-            <input 
-              type="number" 
-              className="w-full text-4xl font-bold text-kyoto-dark-brown bg-transparent border-b-2 border-kyoto-sand focus:border-kyoto-pink focus:outline-none py-2 placeholder-kyoto-sand"
-              placeholder="0"
-              value={newExpense.amount || ''}
-              onChange={(e) => setNewExpense({...newExpense, amount: Number(e.target.value)})}
-            />
+            <div className="relative">
+              <span className="absolute left-0 top-1/2 -translate-y-1/2 text-2xl font-bold text-kyoto-brown/40">¥</span>
+              <input 
+                type="number" 
+                inputMode="numeric"
+                className="w-full text-4xl font-bold text-kyoto-dark-brown bg-transparent border-b-2 border-kyoto-sand focus:border-kyoto-pink focus:outline-none py-2 pl-8 placeholder-kyoto-sand"
+                placeholder="0"
+                value={newExpense.amount || ''}
+                onChange={(e) => setNewExpense({...newExpense, amount: Number(e.target.value)})}
+              />
+            </div>
           </div>
 
           {/* Description */}
@@ -80,7 +90,7 @@ const ExpenseSplitter: React.FC = () => {
             <label className="block text-sm font-bold text-kyoto-brown/60 mb-2">項目說明</label>
             <input 
               type="text" 
-              className="w-full text-lg text-kyoto-dark-brown bg-kyoto-sand/20 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-kyoto-pink/50"
+              className="w-full text-lg text-kyoto-dark-brown bg-white border border-kyoto-sand rounded-2xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-kyoto-pink/50 shadow-sm"
               placeholder="例如：電車車票、晚餐..."
               value={newExpense.description}
               onChange={(e) => setNewExpense({...newExpense, description: e.target.value})}
@@ -96,12 +106,12 @@ const ExpenseSplitter: React.FC = () => {
                   key={user.id}
                   onClick={() => setNewExpense({...newExpense, payerId: user.id})}
                   className={`
-                    flex items-center gap-2 px-4 py-2 rounded-full whitespace-nowrap transition-all
-                    ${newExpense.payerId === user.id ? 'bg-kyoto-dark-brown text-white shadow-md' : 'bg-white text-kyoto-brown border border-kyoto-sand'}
+                    flex items-center gap-2 px-5 py-3 rounded-2xl whitespace-nowrap transition-all
+                    ${newExpense.payerId === user.id ? 'bg-kyoto-dark-brown text-white shadow-lg scale-105' : 'bg-white text-kyoto-brown border border-kyoto-sand'}
                   `}
                 >
-                  <div className={`w-2 h-2 rounded-full ${user.avatarColor}`}></div>
-                  <span className="text-sm font-medium">{user.name}</span>
+                  <div className={`w-3 h-3 rounded-full ${user.avatarColor}`}></div>
+                  <span className="text-sm font-bold">{user.name}</span>
                 </button>
               ))}
             </div>
@@ -118,12 +128,14 @@ const ExpenseSplitter: React.FC = () => {
                     key={user.id}
                     onClick={() => toggleUserInvolvement(user.id)}
                     className={`
-                      flex items-center justify-between px-4 py-3 rounded-xl transition-all
-                      ${isSelected ? 'bg-kyoto-sakura/50 border-2 border-kyoto-pink text-kyoto-dark-brown' : 'bg-white border-2 border-transparent text-kyoto-brown/50'}
+                      flex items-center justify-between px-4 py-4 rounded-2xl transition-all border-2
+                      ${isSelected ? 'bg-kyoto-sakura/40 border-kyoto-pink text-kyoto-dark-brown shadow-sm' : 'bg-white border-transparent text-kyoto-brown/40'}
                     `}
                   >
-                    <span className="font-medium">{user.name}</span>
-                    {isSelected && <Check size={16} className="text-kyoto-pink" />}
+                    <span className="font-bold">{user.name}</span>
+                    <div className={`w-6 h-6 rounded-full flex items-center justify-center transition-colors ${isSelected ? 'bg-kyoto-pink text-white' : 'bg-kyoto-sand text-transparent'}`}>
+                      <Check size={14} strokeWidth={3} />
+                    </div>
                   </button>
                 );
               })}
@@ -131,10 +143,10 @@ const ExpenseSplitter: React.FC = () => {
           </div>
         </div>
 
-        <div className="p-6 bg-white border-t border-kyoto-sand">
+        <div className="p-6 bg-white border-t border-kyoto-sand pb-safe">
           <button 
             onClick={handleAddExpense}
-            className="w-full bg-kyoto-pink text-kyoto-dark-brown font-bold text-lg py-4 rounded-2xl shadow-soft active:scale-95 transition-transform"
+            className="w-full bg-kyoto-pink text-kyoto-dark-brown font-bold text-lg py-4 rounded-2xl shadow-soft active:scale-[0.98] transition-all hover:brightness-105"
           >
             確認新增
           </button>
@@ -148,14 +160,17 @@ const ExpenseSplitter: React.FC = () => {
       {/* Header Summary */}
       <div className="bg-kyoto-dark-brown text-kyoto-cream p-6 rounded-3xl shadow-soft mb-8 relative overflow-hidden">
         <div className="absolute top-0 right-0 w-32 h-32 bg-kyoto-pink rounded-full mix-blend-overlay opacity-20 transform translate-x-10 -translate-y-10"></div>
-        <h2 className="text-kyoto-cream/60 text-sm font-medium mb-1">總花費</h2>
-        <div className="text-4xl font-bold">¥{totalSpent.toLocaleString()}</div>
-        <div className="mt-6 flex gap-2">
+        <h2 className="text-kyoto-cream/60 text-sm font-medium mb-1 tracking-wider uppercase">旅遊預算概覽</h2>
+        <div className="text-4xl font-bold flex items-baseline gap-1">
+          <span className="text-xl text-kyoto-pink">¥</span>
+          {totalSpent.toLocaleString()}
+        </div>
+        <div className="mt-6">
             <button 
                 onClick={() => setIsAdding(true)}
-                className="flex-1 bg-white/10 backdrop-blur-md text-white py-3 rounded-xl font-bold flex items-center justify-center gap-2 hover:bg-white/20 transition-colors"
+                className="w-full bg-white/10 backdrop-blur-md text-white py-3.5 rounded-2xl font-bold flex items-center justify-center gap-2 hover:bg-white/20 transition-colors border border-white/10 active:scale-[0.98]"
             >
-                <Plus size={18} /> 新增支出
+                <Plus size={18} /> 新增支出項目
             </button>
         </div>
       </div>
@@ -163,8 +178,8 @@ const ExpenseSplitter: React.FC = () => {
       {/* Settlements */}
       {settlements.length > 0 && (
         <div className="mb-8">
-          <h3 className="text-kyoto-brown font-bold mb-4 flex items-center gap-2">
-            <Wallet size={18} /> 建議結算
+          <h3 className="text-kyoto-brown font-bold mb-4 flex items-center gap-2 text-sm uppercase tracking-widest">
+            <Wallet size={16} /> 建議結算方式
           </h3>
           <div className="space-y-3">
             {settlements.map((s, idx) => {
@@ -175,26 +190,30 @@ const ExpenseSplitter: React.FC = () => {
                 <div key={idx} className="bg-white p-4 rounded-2xl shadow-sm border border-kyoto-sand flex items-center justify-between">
                   <div className="flex items-center gap-3 flex-1">
                     {/* From User */}
-                    <div className="flex flex-col items-center min-w-[3rem]">
-                      <div className={`w-10 h-10 rounded-full ${fromUser?.avatarColor} flex items-center justify-center text-sm font-bold text-kyoto-dark-brown shadow-sm`}>
+                    <div className="flex flex-col items-center min-w-[3.5rem]">
+                      <div className={`w-12 h-12 rounded-full ${fromUser?.avatarColor} flex items-center justify-center text-base font-bold text-kyoto-dark-brown shadow-sm border-2 border-white`}>
                         {fromUser?.name}
                       </div>
+                      <span className="text-[10px] mt-1 font-bold text-kyoto-brown/40">支出者</span>
                     </div>
                     
                     {/* Arrow & Amount */}
                     <div className="flex-1 flex flex-col items-center px-1">
-                      <span className="text-[10px] text-kyoto-brown/40 mb-1 font-bold">給付</span>
-                      <div className="h-[2px] w-full bg-kyoto-pink/50 relative">
-                         <div className="absolute right-0 top-1/2 -translate-y-1/2 w-2 h-2 bg-kyoto-pink/50 rotate-45 transform translate-x-1/2 -mt-[1px]"></div>
+                      <div className="h-[2px] w-full bg-gradient-to-r from-kyoto-pink/20 via-kyoto-pink to-kyoto-pink/20 relative">
+                         <div className="absolute right-0 top-1/2 -translate-y-1/2 w-2 h-2 bg-kyoto-pink rotate-45 transform translate-x-1/2 -mt-[1px]"></div>
                       </div>
-                      <span className="text-lg font-bold text-kyoto-pink mt-1">¥{s.amount.toLocaleString()}</span>
+                      <span className="text-lg font-bold text-kyoto-dark-brown mt-1">
+                        <span className="text-xs text-kyoto-pink mr-0.5">¥</span>
+                        {s.amount.toLocaleString()}
+                      </span>
                     </div>
 
                     {/* To User */}
-                    <div className="flex flex-col items-center min-w-[3rem]">
-                      <div className={`w-10 h-10 rounded-full ${toUser?.avatarColor} flex items-center justify-center text-sm font-bold text-kyoto-dark-brown shadow-sm`}>
+                    <div className="flex flex-col items-center min-w-[3.5rem]">
+                      <div className={`w-12 h-12 rounded-full ${toUser?.avatarColor} flex items-center justify-center text-base font-bold text-kyoto-dark-brown shadow-sm border-2 border-white`}>
                         {toUser?.name}
                       </div>
+                      <span className="text-[10px] mt-1 font-bold text-kyoto-brown/40">接收者</span>
                     </div>
                   </div>
                 </div>
@@ -206,25 +225,49 @@ const ExpenseSplitter: React.FC = () => {
 
       {/* Recent Activity */}
       <div>
-        <h3 className="text-kyoto-brown font-bold mb-4">最近活動</h3>
+        <h3 className="text-kyoto-brown font-bold mb-4 flex items-center gap-2 text-sm uppercase tracking-widest">
+          <ReceiptText size={16} /> 最近支出記錄
+        </h3>
         <div className="space-y-4">
-          {expenses.map(expense => {
-             const payer = USERS.find(u => u.id === expense.payerId);
-             return (
-              <div key={expense.id} className="flex items-center justify-between">
-                <div className="flex items-center gap-4">
-                  <div className={`w-10 h-10 rounded-full ${payer?.avatarColor} flex items-center justify-center text-xs font-bold text-kyoto-dark-brown opacity-80`}>
-                    {payer?.name.substring(0, 1)}
+          {expenses.length === 0 ? (
+            <div className="text-center py-10 bg-white/50 rounded-3xl border border-dashed border-kyoto-sand">
+              <p className="text-kyoto-brown/40 text-sm italic">尚無支出記錄</p>
+            </div>
+          ) : (
+            expenses.map(expense => {
+              const payer = USERS.find(u => u.id === expense.payerId);
+              return (
+                <div key={expense.id} className="group flex items-center justify-between bg-white p-4 rounded-2xl border border-kyoto-sand/50 shadow-sm transition-all hover:shadow-md">
+                  <div className="flex items-center gap-4">
+                    <div className={`w-10 h-10 rounded-full ${payer?.avatarColor} flex items-center justify-center text-xs font-bold text-kyoto-dark-brown opacity-80 border-2 border-white shadow-sm`}>
+                      {payer?.name}
+                    </div>
+                    <div>
+                      <div className="font-bold text-kyoto-dark-brown leading-tight">{expense.description}</div>
+                      <div className="text-[10px] text-kyoto-brown/50 mt-1 uppercase font-bold tracking-tighter">
+                        {expense.date} • {payer?.name} 先付
+                      </div>
+                    </div>
                   </div>
-                  <div>
-                    <div className="font-bold text-kyoto-dark-brown">{expense.description}</div>
-                    <div className="text-xs text-kyoto-brown/50">{expense.date} • {payer?.name} 付款</div>
+                  <div className="flex items-center gap-3">
+                    <div className="text-right">
+                      <div className="font-bold text-kyoto-dark-brown text-lg">
+                        <span className="text-xs text-kyoto-pink mr-0.5 font-normal">¥</span>
+                        {expense.amount.toLocaleString()}
+                      </div>
+                    </div>
+                    <button 
+                      onClick={() => handleDeleteExpense(expense.id)}
+                      className="p-2 text-kyoto-sand hover:text-red-400 hover:bg-red-50 rounded-full transition-all active:scale-90"
+                      title="刪除"
+                    >
+                      <Trash2 size={16} />
+                    </button>
                   </div>
                 </div>
-                <div className="font-bold text-kyoto-brown">¥{expense.amount.toLocaleString()}</div>
-              </div>
-            );
-          })}
+              );
+            })
+          )}
         </div>
       </div>
     </div>

@@ -102,7 +102,7 @@ const ItineraryView: React.FC<ItineraryViewProps> = ({ dayData, onAddItem, onDel
                   )}
                   
                   {item.note && (
-                    <div className="mt-3 bg-kyoto-sand/30 p-2 rounded-xl text-xs text-kyoto-brown/80 italic">
+                    <div className="mt-3 bg-kyoto-sand/60 border-l-2 border-kyoto-green/60 p-3 rounded-r-xl rounded-l-sm text-xs text-kyoto-dark-brown font-medium leading-relaxed">
                       💡 {item.note}
                     </div>
                   )}
