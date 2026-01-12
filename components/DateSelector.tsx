@@ -1,5 +1,5 @@
 import React, { useRef, useEffect } from 'react';
-import { DayItinerary } from '../types';
+import { DayItinerary } from '../types.ts';
 
 interface DateSelectorProps {
   days: DayItinerary[];
@@ -31,14 +31,12 @@ const DateSelector: React.FC<DateSelectorProps> = ({ days, selectedDate, onSelec
             <div className="h-px flex-1 bg-kyoto-brown/10"></div>
           </div>
           
-          {/* 改造後的標題貼紙 */}
+          {/* 標籤貼紙樣式標題 */}
           <div className="mt-4 relative inline-block self-start z-10">
-            {/* 標籤陰影層 */}
             <div className="absolute inset-0 bg-kyoto-brown/5 blur-md transform -rotate-2 translate-y-1 translate-x-1 rounded-2xl"></div>
             
             <span className="relative inline-block bg-gradient-to-br from-kyoto-pink via-[#FFDADA] to-kyoto-sakura text-kyoto-dark-brown px-6 py-2.5 rounded-2xl text-xl font-bold border-2 border-white shadow-sm transform -rotate-2 font-lively tracking-widest active:scale-95 transition-transform duration-200">
               便當團京阪10日遊 🍱
-              {/* 貼紙光澤感 */}
               <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-tr from-white/20 to-transparent rounded-2xl pointer-events-none"></div>
             </span>
           </div>
