@@ -4,13 +4,24 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <title>便當團京阪10日遊</title>
+    
+    <!-- App Icons -->
+    <link rel="icon" type="image/png" href="https://r2.erweima.ai/i/D0h9P9XpQ2G0W5X5W5X5W5.png" />
+    <link rel="apple-touch-icon" href="https://r2.erweima.ai/i/D0h9P9XpQ2G0W5X5W5X5W5.png" />
+    
+    <!-- PWA Meta Tags -->
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="便當團" />
+    <link rel="manifest" href="./manifest.json" />
+
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@400;500;700&family=ZCOOL+QingKe+HuangYou&family=Klee+One:wght@400;600&display=swap" rel="stylesheet">
     <style>
       body {
-        font-family: 'Zen Maru Gothic', sans-serif;
+        font-family: 'Zen Maru Gothic', 'Noto Sans TC', sans-serif;
         background-color: #FAFAF5;
         -webkit-tap-highlight-color: transparent;
       }
@@ -29,12 +40,21 @@
         from { opacity: 0; transform: translateY(20px); }
         to { opacity: 1; transform: translateY(0); }
       }
+      @keyframes float {
+        0%, 100% { transform: translateY(0px); }
+        50% { transform: translateY(-10px); }
+      }
       .animate-fade-in {
         animation: fadeIn 0.4s ease-out forwards;
       }
       .animate-fade-in-up {
         animation: fadeInUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
       }
+      .animate-float {
+        animation: float 3s ease-in-out infinite;
+      }
+      .font-lively { font-family: 'ZCOOL QingKe HuangYou', cursive; }
+      .font-handwriting { font-family: 'Klee One', serif; }
     </style>
     <script>
       tailwind.config = {
@@ -51,6 +71,7 @@
             },
             boxShadow: {
               'soft': '0 4px 20px -2px rgba(141, 110, 99, 0.1)',
+              'bento': '0 10px 40px -10px rgba(255, 196, 196, 0.5)',
             }
           }
         }
@@ -70,7 +91,6 @@
   </head>
   <body>
     <div id="root"></div>
-    <!-- 必須明確指定 type="module" 並指向入口文件 -->
     <script type="module" src="./index.tsx"></script>
   </body>
 </html>

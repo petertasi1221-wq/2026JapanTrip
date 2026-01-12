@@ -143,6 +143,7 @@ export const ITINERARY_DATA: DayItinerary[] = [
     dayLabel: '第 10 天',
     city: 'Airport',
     items: [
+      { id: 'd10-0', time: '10:00', title: '退房', type: 'hotel', note: '搭南海電鐵' },
       { id: 'd10-1', time: '11:30', title: '臨空城站', type: 'transport', note: '老地方寄放行李' },
       { id: 'd10-2', time: '12:00', title: '臨空城', type: 'activity', note: '吃完午餐後開始逛街' },
       { id: 'd10-3', time: '16:30', title: '前往關西機場 (KIX) 報到', type: 'transport', note: '南海坐一站很近' },
