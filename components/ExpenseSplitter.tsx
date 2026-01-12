@@ -5,10 +5,12 @@ import { calculateSettlements } from '../services/money';
 import { Plus, X, Wallet, Trash2, Check, ReceiptText } from 'lucide-react';
 import ConfirmModal from './ConfirmModal';
 
-const ExpenseSplitter: React.FC = () => {
-  // 預設為 0
-  const [expenses, setExpenses] = useState<Expense[]>([]);
+interface ExpenseSplitterProps {
+  expenses: Expense[];
+  onExpensesChange: (expenses: Expense[]) => void;
+}
 
+const ExpenseSplitter: React.FC<ExpenseSplitterProps> = ({ expenses, onExpensesChange }) => {
   const [isAdding, setIsAdding] = useState(false);
   const [newExpense, setNewExpense] = useState<Partial<Expense>>({
     payerId: 'u1',
@@ -35,7 +37,7 @@ const ExpenseSplitter: React.FC = () => {
       involvedUserIds: newExpense.involvedUserIds as string[]
     };
 
-    setExpenses([expense, ...expenses]);
+    onExpensesChange([expense, ...expenses]);
     setIsAdding(false);
     setNewExpense({
       payerId: 'u1',
@@ -47,7 +49,7 @@ const ExpenseSplitter: React.FC = () => {
 
   const confirmDelete = () => {
     if (deleteModal.id) {
-      setExpenses(prev => prev.filter(e => e.id !== deleteModal.id));
+      onExpensesChange(expenses.filter(e => e.id !== deleteModal.id));
       setDeleteModal({ isOpen: false, id: null });
     }
   };

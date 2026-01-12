@@ -11,9 +11,9 @@ const ItineraryView: React.FC<ItineraryViewProps> = ({ dayData }) => {
   if (!dayData) return <div className="p-6 text-center text-kyoto-brown/50">沒有資料</div>;
 
   return (
-    <div className="pb-24 animate-fade-in">
+    <div className="pb-24">
       <div className="px-6 py-6">
-        <div className="flex items-center justify-between mb-6">
+        <div className="flex items-center justify-between mb-6 animate-fade-in">
           <div className="flex items-center space-x-2">
              <span className="bg-kyoto-green/20 text-kyoto-dark-brown px-3 py-1 rounded-full text-sm font-bold flex items-center gap-1">
                <MapPin size={14} /> {dayData.city === 'Airport' ? '機場' : dayData.city === 'Kyoto' ? '京都' : dayData.city === 'Osaka' ? '大阪' : dayData.city === 'Nara' ? '奈良' : dayData.city}
@@ -23,19 +23,27 @@ const ItineraryView: React.FC<ItineraryViewProps> = ({ dayData }) => {
         </div>
 
         <div className="relative border-l-2 border-kyoto-brown/10 ml-3 space-y-8">
-          {dayData.items.map((item) => {
+          {dayData.items.map((item, index) => {
             const Icon = getIconForType(item.type);
             
             return (
-              <div key={item.id} className="relative pl-8 group">
+              <div 
+                key={item.id} 
+                className="relative pl-8 group animate-fade-in-up"
+                style={{ 
+                  animationDelay: `${index * 0.1}s`,
+                  opacity: 0,
+                  animationFillMode: 'forwards'
+                }}
+              >
                 {/* Timeline Dot */}
                 <div className={`
-                  absolute -left-[9px] top-0 w-5 h-5 rounded-full border-4 border-kyoto-cream 
+                  absolute -left-[9px] top-0 w-5 h-5 rounded-full border-4 border-kyoto-cream transition-transform duration-300 group-hover:scale-125
                   ${item.type === 'food' ? 'bg-kyoto-pink' : item.type === 'transport' ? 'bg-kyoto-green' : 'bg-kyoto-brown'}
                 `}></div>
                 
                 {/* Card */}
-                <div className="bg-white p-5 rounded-3xl shadow-sm border border-kyoto-sand/50 transition-all duration-200 relative overflow-hidden active:scale-[0.99]">
+                <div className="bg-white p-5 rounded-3xl shadow-sm border border-kyoto-sand/50 transition-all duration-300 relative overflow-hidden active:scale-[0.98] hover:shadow-md hover:border-kyoto-pink/30">
                   
                   <div className="flex justify-between items-start mb-2">
                     <div className="flex items-center text-kyoto-brown/60 text-sm font-medium">
@@ -64,7 +72,10 @@ const ItineraryView: React.FC<ItineraryViewProps> = ({ dayData }) => {
           })}
           
           {/* End of day marker */}
-          <div className="relative pl-8 pb-4">
+          <div 
+            className="relative pl-8 pb-4 animate-fade-in"
+            style={{ animationDelay: `${dayData.items.length * 0.1}s`, opacity: 0, animationFillMode: 'forwards' }}
+          >
              <div className="absolute -left-[5px] top-0 w-3 h-3 rounded-full bg-kyoto-brown/20"></div>
              <div className="text-sm text-kyoto-brown/40 font-medium italic">今日行程結束</div>
           </div>

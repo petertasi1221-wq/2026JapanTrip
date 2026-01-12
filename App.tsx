@@ -1,15 +1,28 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import DateSelector from './components/DateSelector';
 import ItineraryView from './components/ItineraryView';
 import ExpenseSplitter from './components/ExpenseSplitter';
 import { Calendar, Wallet } from 'lucide-react';
 import { TRIP_START_DATE, ITINERARY_DATA } from './constants';
+import { Expense } from './types';
+
+const STORAGE_KEY = 'bentou_trip_expenses';
 
 function App() {
   const [activeTab, setActiveTab] = useState<'itinerary' | 'expenses'>('itinerary');
   const [selectedDate, setSelectedDate] = useState<string>(TRIP_START_DATE);
   
-  // ITINERARY_DATA 現在是唯讀的，直接從常量獲取
+  // 初始化分帳狀態，優先從 LocalStorage 讀取
+  const [expenses, setExpenses] = useState<Expense[]>(() => {
+    const saved = localStorage.getItem(STORAGE_KEY);
+    return saved ? JSON.parse(saved) : [];
+  });
+
+  // 當 expenses 變動時，自動儲存到 LocalStorage
+  useEffect(() => {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(expenses));
+  }, [expenses]);
+
   const currentDayData = ITINERARY_DATA.find(d => d.date === selectedDate);
 
   return (
@@ -30,7 +43,10 @@ function App() {
               />
             </>
           ) : (
-            <ExpenseSplitter />
+            <ExpenseSplitter 
+              expenses={expenses} 
+              onExpensesChange={setExpenses} 
+            />
           )}
         </div>
 
