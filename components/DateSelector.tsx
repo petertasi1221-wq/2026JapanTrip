@@ -20,10 +20,17 @@ const DateSelector: React.FC<DateSelectorProps> = ({ days, selectedDate, onSelec
   }, [selectedDate]);
 
   return (
-    <div className="w-full bg-kyoto-cream pt-4 pb-2 sticky top-0 z-10 shadow-sm border-b border-kyoto-brown/10">
-      <div className="px-6 mb-2 flex justify-between items-end">
-        <h2 className="text-2xl font-bold text-kyoto-dark-brown">2026年4月</h2>
-        <span className="text-xs font-bold text-kyoto-pink bg-kyoto-dark-brown/5 px-2 py-1 rounded-full uppercase tracking-wider">便當團京阪10日遊</span>
+    <div className="w-full bg-kyoto-cream pt-5 pb-2 sticky top-0 z-10 shadow-sm border-b border-kyoto-brown/10">
+      <div className="px-6 mb-4 flex justify-between items-center">
+        <h2 className="text-2xl font-bold text-kyoto-dark-brown tracking-tight">2026年4月</h2>
+        
+        {/* 美化後的旅行標籤 */}
+        <div className="relative group">
+          <div className="absolute inset-0 bg-kyoto-pink/30 blur-md rounded-full -rotate-1"></div>
+          <span className="relative inline-block bg-gradient-to-r from-kyoto-pink to-[#FFD1D1] text-kyoto-dark-brown px-4 py-2 rounded-xl text-sm font-bold shadow-soft border border-white/40 transform -rotate-1 tracking-wider">
+            🌸 便當團京阪10日遊
+          </span>
+        </div>
       </div>
       
       <div 
