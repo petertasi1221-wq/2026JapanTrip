@@ -1,4 +1,4 @@
-import { DayItinerary, User } from './types';
+import { DayItinerary, User } from './types.ts';
 import { Plane, Coffee, Camera, Train, MapPin, Utensils, BedDouble } from 'lucide-react';
 
 export const USERS: User[] = [
@@ -10,6 +10,8 @@ export const USERS: User[] = [
 
 export const TRIP_START_DATE = '2026-04-11';
 export const TRIP_END_DATE = '2026-04-20';
+
+// ...（其餘資料保持不變）
 
 export const ITINERARY_DATA: DayItinerary[] = [
   {

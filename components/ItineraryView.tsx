@@ -1,7 +1,7 @@
 import React from 'react';
-import { getIconForType } from '../constants.ts';
+import { getIconForType } from '../constants';
 import { MapPin, Clock } from 'lucide-react';
-import { DayItinerary } from '../types.ts';
+import { DayItinerary } from '../types';
 
 interface ItineraryViewProps {
   dayData?: DayItinerary;
@@ -48,6 +48,7 @@ const ItineraryView: React.FC<ItineraryViewProps> = ({ dayData }) => {
                 `}></div>
                 
                 <div className="relative">
+                  {/* 標記膠帶裝飾 */}
                   <div className={`absolute -top-3 left-1/2 -translate-x-1/2 w-16 h-4 opacity-60 z-20 mix-blend-multiply
                     ${index % 3 === 0 ? 'bg-kyoto-pink/80 -rotate-2' : index % 3 === 1 ? 'bg-kyoto-green/80 rotate-3' : 'bg-orange-200/80 -rotate-1'}
                   `}></div>

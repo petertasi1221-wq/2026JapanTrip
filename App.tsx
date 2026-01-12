@@ -12,13 +12,11 @@ function App() {
   const [activeTab, setActiveTab] = useState<'itinerary' | 'expenses'>('itinerary');
   const [selectedDate, setSelectedDate] = useState<string>(TRIP_START_DATE);
   
-  // 初始化分帳狀態，優先從 LocalStorage 讀取
   const [expenses, setExpenses] = useState<Expense[]>(() => {
     const saved = localStorage.getItem(STORAGE_KEY);
     return saved ? JSON.parse(saved) : [];
   });
 
-  // 當 expenses 變動時，自動儲存到 LocalStorage
   useEffect(() => {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(expenses));
   }, [expenses]);
@@ -29,8 +27,7 @@ function App() {
     <div className="min-h-screen bg-kyoto-cream text-kyoto-dark-brown font-sans flex justify-center">
       <div className="w-full max-w-md bg-kyoto-cream relative shadow-2xl min-h-screen flex flex-col">
         
-        {/* Content Area */}
-        <div className="flex-1 overflow-y-auto no-scrollbar">
+        <div className="flex-1 overflow-y-auto no-scrollbar pb-24">
           {activeTab === 'itinerary' ? (
             <>
               <DateSelector 
@@ -60,7 +57,7 @@ function App() {
               <div className={`p-2.5 rounded-2xl transition-all ${activeTab === 'itinerary' ? 'bg-kyoto-pink/30 scale-110 shadow-sm' : 'bg-transparent'}`}>
                 <Calendar size={24} strokeWidth={activeTab === 'itinerary' ? 2.5 : 2} />
               </div>
-              <span className="text-[10px] font-bold tracking-widest">行程</span>
+              <span className="text-[10px] font-bold tracking-widest font-lively uppercase">行程</span>
             </button>
 
             <button 
@@ -70,7 +67,7 @@ function App() {
               <div className={`p-2.5 rounded-2xl transition-all ${activeTab === 'expenses' ? 'bg-kyoto-green/30 scale-110 shadow-sm' : 'bg-transparent'}`}>
                 <Wallet size={24} strokeWidth={activeTab === 'expenses' ? 2.5 : 2} />
               </div>
-              <span className="text-[10px] font-bold tracking-widest">分帳</span>
+              <span className="text-[10px] font-bold tracking-widest font-lively uppercase">分帳</span>
             </button>
           </div>
         </div>
