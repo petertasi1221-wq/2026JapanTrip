@@ -5,14 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <title>便當團京阪10日遊</title>
     
-    <!-- App Icons -->
-    <link rel="icon" type="image/png" href="/icon.png" />
-    <link rel="apple-touch-icon" href="/icon.png" />
+    <!-- App Icons (使用本地 icon.png) -->
+    <link rel="icon" type="image/png" href="./icon.png" />
+    <link rel="apple-touch-icon" href="./icon.png" />
+    <link rel="apple-touch-icon-precomposed" href="./icon.png" />
     
     <!-- PWA Meta Tags -->
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="default" />
     <meta name="apple-mobile-web-app-title" content="便當團" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="theme-color" content="#FFFDF7" />
+    
     <link rel="manifest" href="./manifest.json" />
 
     <script src="https://cdn.tailwindcss.com"></script>
@@ -24,6 +28,7 @@
         font-family: 'Zen Maru Gothic', 'Noto Sans TC', sans-serif;
         background-color: #FAFAF5;
         -webkit-tap-highlight-color: transparent;
+        overflow-x: hidden;
       }
       .no-scrollbar::-webkit-scrollbar {
           display: none;

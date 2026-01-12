@@ -1,13 +1,18 @@
 {
   "name": "便當團京阪10日遊",
   "short_name": "便當團",
-  "start_url": "./index.html",
+  "start_url": ".",
   "display": "standalone",
   "background_color": "#FAFAF5",
   "theme_color": "#FFFDF7",
   "icons": [
     {
-      "src": "https://r2.erweima.ai/i/D0h9P9XpQ2G0W5X5W5X5W5.png",
+      "src": "./icon.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "./icon.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any maskable"
