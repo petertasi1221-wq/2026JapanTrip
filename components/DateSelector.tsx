@@ -20,31 +20,25 @@ const DateSelector: React.FC<DateSelectorProps> = ({ days, selectedDate, onSelec
   }, [selectedDate]);
 
   return (
-    <div className="w-full bg-kyoto-cream pt-8 pb-2 sticky top-0 z-10 shadow-sm border-b border-kyoto-brown/10 overflow-hidden">
-      <div className="absolute top-0 right-0 w-32 h-32 bg-kyoto-sakura/20 rounded-full blur-3xl -translate-y-16 translate-x-16"></div>
+    <div className="w-full glass pt-safe pb-2 sticky top-0 z-40 transition-all duration-300">
       
-      <div className="px-6 mb-10 relative">
+      <div className="px-6 py-4 mb-2 flex items-end justify-between">
         <div className="flex flex-col">
-          <div className="flex items-center gap-3">
-            <h2 className="text-3xl font-bold text-kyoto-dark-brown tracking-tighter font-lively">2026.04</h2>
-            <div className="h-px flex-1 bg-kyoto-brown/10"></div>
-          </div>
-          
-          {/* 旅行標籤貼紙標題 */}
-          <div className="mt-4 relative inline-block self-start z-10">
-            <div className="absolute inset-0 bg-kyoto-brown/10 blur-lg transform -rotate-2 translate-y-1 translate-x-1 rounded-2xl"></div>
-            
-            <span className="relative inline-block bg-gradient-to-br from-kyoto-pink via-[#FFDADA] to-kyoto-sakura text-kyoto-dark-brown px-6 py-2.5 rounded-2xl text-xl font-bold border-2 border-white shadow-md transform -rotate-2 font-lively tracking-widest active:scale-95 transition-transform duration-200">
-              便當團京阪10日遊 🍱
-              <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-tr from-white/30 to-transparent rounded-2xl pointer-events-none"></div>
-            </span>
-          </div>
+          <span className="text-xs font-bold text-kyoto-brown/60 tracking-widest mb-1 font-lively">2026.04</span>
+          <h2 className="text-3xl font-bold text-kyoto-dark-brown tracking-tighter font-lively">
+            Trip to JAPAN 
+          </h2>
+        </div>
+        
+        {/* 簡化的標籤 - 字體加大 */}
+        <div className="bg-kyoto-pink/20 px-4 py-1.5 rounded-full border border-kyoto-pink/30">
+          <span className="text-base font-bold text-kyoto-dark-brown font-lively">便當團京阪10日遊 🍱</span>
         </div>
       </div>
       
       <div 
         ref={scrollRef}
-        className="flex overflow-x-auto gap-3 px-6 pb-4 no-scrollbar snap-x relative z-10"
+        className="flex overflow-x-auto gap-3 px-6 pb-4 no-scrollbar snap-x relative"
       >
         {days.map((day) => {
           const isSelected = selectedDate === day.date;
@@ -57,17 +51,19 @@ const DateSelector: React.FC<DateSelectorProps> = ({ days, selectedDate, onSelec
               onClick={() => onSelectDate(day.date)}
               className={`
                 snap-center flex-shrink-0 flex flex-col items-center justify-center 
-                w-16 h-20 rounded-2xl transition-all duration-300
+                w-14 h-20 rounded-[1.2rem] transition-all duration-300 relative overflow-hidden
                 ${isSelected 
-                  ? 'bg-kyoto-dark-brown text-white shadow-soft transform scale-105 z-10' 
-                  : 'bg-white text-kyoto-brown border border-kyoto-sand'}
+                  ? 'bg-kyoto-dark-brown text-white shadow-lg scale-105' 
+                  : 'bg-white text-kyoto-brown border border-kyoto-sand shadow-sm hover:border-kyoto-brown/30'}
               `}
             >
-              <span className={`text-[10px] font-bold uppercase ${isSelected ? 'text-kyoto-pink' : 'text-kyoto-brown/40'}`}>
+              <span className={`text-[10px] font-bold uppercase mt-1 ${isSelected ? 'text-kyoto-pink' : 'text-kyoto-brown/40'}`}>
                 {day.weekday}
               </span>
-              <span className="text-xl font-bold mt-1 font-lively">{dayNum}</span>
-              {isSelected && <div className="w-1.5 h-1.5 bg-kyoto-pink rounded-full mt-1"></div>}
+              <span className="text-xl font-bold font-lively leading-none mt-1">{dayNum}</span>
+              {isSelected && (
+                 <div className="absolute bottom-2 w-1 h-1 bg-kyoto-pink rounded-full"></div>
+              )}
             </button>
           );
         })}

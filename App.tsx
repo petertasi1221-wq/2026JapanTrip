@@ -24,10 +24,12 @@ function App() {
   const currentDayData = ITINERARY_DATA.find(d => d.date === selectedDate);
 
   return (
-    <div className="min-h-screen bg-kyoto-cream text-kyoto-dark-brown font-sans flex justify-center">
-      <div className="w-full max-w-md bg-kyoto-cream relative shadow-2xl min-h-screen flex flex-col">
+    <div className="h-[100dvh] bg-kyoto-cream text-kyoto-dark-brown font-sans flex justify-center overflow-hidden">
+      {/* 限制最大寬度，模擬手機體驗，並確保陰影不被截斷 */}
+      <div className="w-full max-w-md bg-kyoto-cream relative h-full flex flex-col shadow-2xl">
         
-        <div className="flex-1 overflow-y-auto no-scrollbar pb-24">
+        {/* Main Content Area */}
+        <div className="flex-1 overflow-y-auto no-scrollbar pb-32">
           {activeTab === 'itinerary' ? (
             <>
               <DateSelector 
@@ -47,27 +49,27 @@ function App() {
           )}
         </div>
 
-        {/* Bottom Navigation */}
-        <div className="fixed bottom-0 w-full max-w-md bg-white/95 backdrop-blur-md border-t border-kyoto-brown/5 pb-safe z-40">
+        {/* Bottom Navigation - Glassmorphism */}
+        <div className="fixed bottom-0 w-full max-w-md glass-nav pb-safe z-50 rounded-t-[2rem]">
           <div className="flex justify-around items-center h-20 px-6">
             <button 
               onClick={() => setActiveTab('itinerary')}
-              className={`flex flex-col items-center gap-1 transition-colors duration-300 ${activeTab === 'itinerary' ? 'text-kyoto-dark-brown' : 'text-kyoto-brown/40'}`}
+              className="group flex flex-col items-center gap-1.5 w-16"
             >
-              <div className={`p-2.5 rounded-2xl transition-all ${activeTab === 'itinerary' ? 'bg-kyoto-pink/30 scale-110 shadow-sm' : 'bg-transparent'}`}>
-                <Calendar size={24} strokeWidth={activeTab === 'itinerary' ? 2.5 : 2} />
+              <div className={`p-2 rounded-2xl transition-all duration-300 ${activeTab === 'itinerary' ? 'bg-kyoto-dark-brown text-white shadow-lg translate-y-[-4px]' : 'text-kyoto-brown/40 hover:bg-kyoto-brown/5'}`}>
+                <Calendar size={22} strokeWidth={activeTab === 'itinerary' ? 2.5 : 2} />
               </div>
-              <span className="text-[10px] font-bold tracking-widest font-lively uppercase">行程</span>
+              <span className={`text-[10px] font-bold tracking-widest font-lively transition-colors ${activeTab === 'itinerary' ? 'text-kyoto-dark-brown' : 'text-kyoto-brown/40'}`}>行程</span>
             </button>
 
             <button 
               onClick={() => setActiveTab('expenses')}
-              className={`flex flex-col items-center gap-1 transition-colors duration-300 ${activeTab === 'expenses' ? 'text-kyoto-dark-brown' : 'text-kyoto-brown/40'}`}
+              className="group flex flex-col items-center gap-1.5 w-16"
             >
-              <div className={`p-2.5 rounded-2xl transition-all ${activeTab === 'expenses' ? 'bg-kyoto-green/30 scale-110 shadow-sm' : 'bg-transparent'}`}>
-                <Wallet size={24} strokeWidth={activeTab === 'expenses' ? 2.5 : 2} />
+              <div className={`p-2 rounded-2xl transition-all duration-300 ${activeTab === 'expenses' ? 'bg-kyoto-dark-brown text-white shadow-lg translate-y-[-4px]' : 'text-kyoto-brown/40 hover:bg-kyoto-brown/5'}`}>
+                <Wallet size={22} strokeWidth={activeTab === 'expenses' ? 2.5 : 2} />
               </div>
-              <span className="text-[10px] font-bold tracking-widest font-lively uppercase">分帳</span>
+              <span className={`text-[10px] font-bold tracking-widest font-lively transition-colors ${activeTab === 'expenses' ? 'text-kyoto-dark-brown' : 'text-kyoto-brown/40'}`}>分帳</span>
             </button>
           </div>
         </div>
