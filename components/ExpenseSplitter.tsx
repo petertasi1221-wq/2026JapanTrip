@@ -344,7 +344,7 @@ const ExpenseSplitter: React.FC<ExpenseSplitterProps> = ({ expenses, onExpensesC
                     <label className="block text-xs font-bold text-kyoto-brown/50 mb-2 ml-1 font-lively">每人花費金額</label>
                     <div className="space-y-3 bg-white/50 p-4 rounded-2xl border border-kyoto-sand/30">
                       {USERS.map(user => (
-                        <div key={user.id} className="flex items-center gap-3">
+                        <div key={user.id} className="flex items-center justify-between gap-3">
                           <div className={`w-8 h-8 rounded-full ${user.avatarColor} flex items-center justify-center text-xs font-bold text-kyoto-dark-brown shadow-sm flex-shrink-0`}>
                             {user.name}
                           </div>
@@ -353,8 +353,8 @@ const ExpenseSplitter: React.FC<ExpenseSplitterProps> = ({ expenses, onExpensesC
                             inputMode="decimal"
                             pattern="[0-9]*"
                             placeholder="0"
-                            className={`flex-1 bg-white border rounded-xl px-3 py-2 outline-none transition-colors font-lively text-right ${
-                              Number(individualAmounts[user.id]) > 0 ? 'border-kyoto-green bg-kyoto-green/5 text-kyoto-dark-brown font-bold' : 'border-kyoto-sand text-gray-400'
+                            className={`w-32 bg-white border border-kyoto-sand rounded-xl px-3 py-2 outline-none transition-colors font-lively text-right ${
+                              Number(individualAmounts[user.id]) > 0 ? 'border-kyoto-green bg-kyoto-green/5 text-kyoto-dark-brown font-bold' : 'text-gray-400'
                             }`}
                             value={individualAmounts[user.id] || ''}
                             onChange={e => {
