@@ -1,7 +1,7 @@
 {
   "name": "便當團京阪10日遊",
   "short_name": "便當團",
-  "start_url": ".",
+  "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#FAFAF5",
   "theme_color": "#FFFDF7",

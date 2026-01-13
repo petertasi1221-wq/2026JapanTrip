@@ -1,5 +1,5 @@
 import React, { useRef, useEffect } from 'react';
-import { DayItinerary } from '../types.ts';
+import { DayItinerary } from '../types';
 
 interface DateSelectorProps {
   days: DayItinerary[];

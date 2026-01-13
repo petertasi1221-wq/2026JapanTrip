@@ -1,9 +1,9 @@
 import React, { useState, useMemo } from 'react';
-import { USERS } from '../constants.ts';
-import { Expense } from '../types.ts';
-import { calculateSettlements } from '../services/money.ts';
+import { USERS } from '../constants';
+import { Expense } from '../types';
+import { calculateSettlements } from '../services/money';
 import { Plus, X, Wallet, Trash2, ReceiptText, ChevronRight } from 'lucide-react';
-import ConfirmModal from './ConfirmModal.tsx';
+import ConfirmModal from './ConfirmModal';
 
 interface ExpenseSplitterProps {
   expenses: Expense[];
@@ -138,74 +138,4 @@ const ExpenseSplitter: React.FC<ExpenseSplitterProps> = ({ expenses, onExpensesC
       {/* 新增支出彈窗 */}
       {isAdding && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-6">
-          <div className="absolute inset-0 bg-kyoto-dark-brown/40 backdrop-blur-sm animate-fade-in" onClick={() => setIsAdding(false)}></div>
-          <div className="bg-kyoto-cream w-full max-w-sm rounded-[2.5rem] shadow-2xl overflow-hidden z-10 animate-fade-in-up border border-white/50">
-            <div className="p-8">
-              <div className="flex justify-between items-center mb-6">
-                <h3 className="text-xl font-bold font-lively">記一筆 🖋️</h3>
-                <button onClick={() => setIsAdding(false)} className="text-kyoto-brown/40 hover:text-kyoto-dark-brown"><X size={24} /></button>
-              </div>
-              
-              <div className="space-y-4">
-                <div>
-                  <label className="block text-xs font-bold text-kyoto-brown/50 mb-1 ml-1 font-lively">支出項目</label>
-                  <input 
-                    type="text" 
-                    placeholder="例如：拉麵、車票..."
-                    className="w-full bg-white border border-kyoto-sand rounded-xl px-4 py-3 outline-none focus:border-kyoto-pink transition-colors font-handwriting"
-                    value={newExpense.description}
-                    onChange={e => setNewExpense({...newExpense, description: e.target.value})}
-                  />
-                </div>
-                
-                <div>
-                  <label className="block text-xs font-bold text-kyoto-brown/50 mb-1 ml-1 font-lively">金額 (JPY)</label>
-                  <input 
-                    type="number" 
-                    placeholder="0"
-                    className="w-full bg-white border border-kyoto-sand rounded-xl px-4 py-3 outline-none focus:border-kyoto-pink transition-colors font-lively"
-                    value={newExpense.amount || ''}
-                    onChange={e => setNewExpense({...newExpense, amount: Number(e.target.value)})}
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-xs font-bold text-kyoto-brown/50 mb-1 ml-1 font-lively">誰付錢？</label>
-                  <div className="flex flex-wrap gap-2">
-                    {USERS.map(user => (
-                      <button
-                        key={user.id}
-                        onClick={() => setNewExpense({...newExpense, payerId: user.id})}
-                        className={`px-4 py-2 rounded-xl text-sm font-bold transition-all ${newExpense.payerId === user.id ? 'bg-kyoto-dark-brown text-white shadow-md' : 'bg-white text-kyoto-brown border border-kyoto-sand'}`}
-                      >
-                        {user.name}
-                      </button>
-                    ))}
-                  </div>
-                </div>
-
-                <button 
-                  onClick={handleAddExpense}
-                  disabled={!newExpense.description || !newExpense.amount}
-                  className="w-full bg-kyoto-pink text-kyoto-dark-brown font-bold py-4 rounded-2xl shadow-lg hover:bg-kyoto-pink/80 transition-all active:scale-95 disabled:opacity-50 disabled:active:scale-100 font-lively mt-4"
-                >
-                  儲存紀錄
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
-
-      <ConfirmModal 
-        isOpen={deleteModal.isOpen}
-        title="確定刪除紀錄？"
-        message="這項支出記錄一旦刪除後將無法恢復。"
-        onConfirm={confirmDelete}
-        onCancel={() => setDeleteModal({ isOpen: false, id: null })}
-      />
-    </div>
-  );
-};
-
-export default ExpenseSplitter;
+          <div className="absolute inset-0 bg-kyoto-dark-brown/40 backdrop-blur-sm
