@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import DateSelector from './components/DateSelector';
-import ItineraryView from './components/ItineraryView';
-import ExpenseSplitter from './components/ExpenseSplitter';
+import DateSelector from './components/DateSelector.tsx';
+import ItineraryView from './components/ItineraryView.tsx';
+import ExpenseSplitter from './components/ExpenseSplitter.tsx';
 import { Calendar, Wallet } from 'lucide-react';
-import { TRIP_START_DATE, ITINERARY_DATA } from './constants';
-import { Expense } from './types';
+import { TRIP_START_DATE, ITINERARY_DATA } from './constants.ts';
+import { Expense } from './types.ts';
 
 const STORAGE_KEY = 'bentou_trip_expenses';
 

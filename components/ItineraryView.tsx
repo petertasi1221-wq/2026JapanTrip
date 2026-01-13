@@ -1,7 +1,7 @@
 import React from 'react';
-import { getIconForType } from '../constants';
+import { getIconForType } from '../constants.ts';
 import { MapPin, Clock } from 'lucide-react';
-import { DayItinerary } from '../types';
+import { DayItinerary } from '../types.ts';
 
 interface ItineraryViewProps {
   dayData?: DayItinerary;
