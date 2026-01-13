@@ -3,13 +3,13 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <base href="./" />
+    <!-- 移除 base tag，這是導致 PWA 404 的主因 -->
     <title>便當團京阪10日遊</title>
     
     <!-- App Icons -->
-    <link rel="icon" type="image/png" href="./icon.png" />
-    <link rel="apple-touch-icon" href="./icon.png" />
-    <link rel="apple-touch-icon-precomposed" href="./icon.png" />
+    <link rel="icon" type="image/png" href="icon.png" />
+    <link rel="apple-touch-icon" href="icon.png" />
+    <link rel="apple-touch-icon-precomposed" href="icon.png" />
     
     <!-- PWA Meta Tags -->
     <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -18,16 +18,15 @@
     <meta name="mobile-web-app-capable" content="yes" />
     <meta name="theme-color" content="#FFFDF7" />
     
-    <link rel="manifest" href="./manifest.json" />
+    <!-- 移除 ./ 前綴，使用標準相對路徑 -->
+    <link rel="manifest" href="manifest.json" />
 
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <!-- 僅保留 Klee One (手寫) 與 Zen Maru Gothic (圓體) -->
     <link href="https://fonts.googleapis.com/css2?family=Klee+One:wght@400;600&family=Zen+Maru+Gothic:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
       body {
-        /* 全域使用 Zen Maru Gothic 營造簡約溫暖質感 */
         font-family: 'Zen Maru Gothic', 'Noto Sans TC', sans-serif;
         background-color: #FAFAF5;
         -webkit-tap-highlight-color: transparent;
@@ -62,7 +61,6 @@
       .animate-float {
         animation: float 3s ease-in-out infinite;
       }
-      /* 將原本的 font-lively 導向 Zen Maru Gothic 的粗體，移除 HuangYou */
       .font-lively { font-family: 'Zen Maru Gothic', sans-serif; font-weight: 700; }
       .font-handwriting { font-family: 'Klee One', serif; }
     </style>
@@ -101,6 +99,6 @@
   </head>
   <body>
     <div id="root"></div>
-    <script type="module" src="./index.tsx"></script>
+    <script type="module" src="index.tsx"></script>
   </body>
 </html>
