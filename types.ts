@@ -28,6 +28,7 @@ export interface Expense {
   description: string;
   date: string;
   involvedUserIds: string[]; // Who splits this bill
+  splitDetails?: Record<string, number>; // Specific amount per user { 'u1': 100, 'u2': 200 }
 }
 
 export interface Balance {

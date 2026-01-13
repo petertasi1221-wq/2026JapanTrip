@@ -9,20 +9,27 @@ export const calculateSettlements = (expenses: Expense[], users: User[]): Balanc
   // Calculate net balance for each person
   expenses.forEach(expense => {
     const paidBy = expense.payerId;
-    const amount = expense.amount;
-    const splitCount = expense.involvedUserIds.length;
+    const totalAmount = expense.amount;
     
-    if (splitCount === 0) return;
-
-    const share = amount / splitCount;
-
     // Payer gets positive balance (they are owed money)
-    balances[paidBy] = (balances[paidBy] || 0) + amount;
+    balances[paidBy] = (balances[paidBy] || 0) + totalAmount;
 
-    // Participants get negative balance (they owe money)
-    expense.involvedUserIds.forEach(userId => {
-      balances[userId] = (balances[userId] || 0) - share;
-    });
+    // Deduct from participants (they owe money)
+    if (expense.splitDetails && Object.keys(expense.splitDetails).length > 0) {
+      // Logic for Exact Amounts (Individual Input)
+      Object.entries(expense.splitDetails).forEach(([userId, amount]) => {
+        balances[userId] = (balances[userId] || 0) - amount;
+      });
+    } else {
+      // Logic for Equal Split (Legacy or Simple Mode)
+      const splitCount = expense.involvedUserIds.length;
+      if (splitCount > 0) {
+        const share = totalAmount / splitCount;
+        expense.involvedUserIds.forEach(userId => {
+          balances[userId] = (balances[userId] || 0) - share;
+        });
+      }
+    }
   });
 
   // Separate into debtors (owe money) and creditors (owed money)
